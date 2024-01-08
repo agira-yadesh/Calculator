@@ -1,94 +1,67 @@
+
+
+document.querySelectorAll(".digits").forEach(button => {
+  button.addEventListener("click", () => {
+    appendToDisplay(button.innerHTML); 
+  });
+});
+
+document.querySelectorAll(".operation").forEach(button => {
+  button.addEventListener("click", () => {
+    appendToDisplay(button.innerHTML); 
+  });
+});
+
 document.getElementById("All-clear").addEventListener("click", clearDisplay);
-document.getElementById("divide").onclick = function () {
-  appendToDisplay("/");
-};
-document.getElementById("multiple").addEventListener("click", function () {
-  appendToDisplay("*");
-});
-document.getElementById("sub").addEventListener("click", function () {
-  appendToDisplay("-");
-});
-document.getElementById("add").addEventListener("click", function () {
-  appendToDisplay("+");
-});
-document
-  .getElementById("equal")
-  .addEventListener("click", calculate, onclickEqual);
-document.getElementById("percent").addEventListener("click", function () {
-  appendToDisplay("%");
-});
-document.getElementById("zero").addEventListener("click", function () {
-  appendToDisplay("0");
-});
-document.getElementById("one").addEventListener("click", function () {
-  appendToDisplay("1");
-});
-document.getElementById("two").addEventListener("click", function () {
-  appendToDisplay("2");
-});
-document.getElementById("three").addEventListener("click", function () {
-  appendToDisplay("3");
-});
-document.getElementById("four").addEventListener("click", function () {
-  appendToDisplay("4");
-});
-document.getElementById("five").addEventListener("click", function () {
-  appendToDisplay("5");
-});
-document.getElementById("six").addEventListener("click", function () {
-  appendToDisplay("6");
-});
-document.getElementById("seven").addEventListener("click", function () {
-  appendToDisplay("7");
-});
-document.getElementById("eight").addEventListener("click", function () {
-  appendToDisplay("8");
-});
-document.getElementById("nine").addEventListener("click", function () {
-  appendToDisplay("9");
-});
-document.getElementById("dot").addEventListener("click", function () {
-  appendToDisplay(".");
-});
+document.getElementById("clear").onclick = function(){ clearElement() };
+document.getElementById("equal").onclick = calculate;
 
-// var arr1 = [];
-// var arr2 =[];
-function onclickEqual() {
-  inputArray = [document.getElementById("display").value];
-  console.log(inputArray);
-}
-
+// function defined to append the value to dsplay(id)
 function appendToDisplay(value) {
-  let num = document.getElementById("display").value;
   document.getElementById("display").value += value;
 }
 
 function clearDisplay() {
-  document.getElementById("display").value = "";
+  document.getElementById("display").value = "";  // function to clear the string which is input(display)
 }
+
+function clearElement(){
+  let value = document.getElementById("display").value;
+  document.getElementById("display").value = value.substr(0, value.length-1);  // to remove last entered string 
+  
+}
+
 
 function calculate() {
   var displayValue = document.getElementById("display").value;
 
-  // Validate input using a regular expression
   var regex = /^[-+*/.\d\s]+$/;
   if (!regex.test(displayValue)) {
-    document.getElementById("display").value = "Error";
+    document.getElementById("display").value = "Invalid";  // checking if the values entered in display valid values
+    window.alert("Invalid Operation");  
+    
     return;
   }
 
   try {
     var result = evaluateExpression(displayValue);
+    sessionStorage.setItem(document.getElementById("display").value, result);  // session storage
+    localStorage.setItem(document.getElementById("display").value, result);  //local Storage
     document.getElementById("display").value = result;
+    
   } catch (error) {
     document.getElementById("display").value = "Error";
   }
+  
 }
 
 function evaluateExpression(expression) {
-  var tokens = expression.match(/[-+*/()]|\d+(\.\d+)?/g);
+  // console.log(expression)
+  var values = expression.match(/[-+*/]|\d+(\.\d+)?/g);
+  // console.log(values);
+  
 
-  if (!tokens) {
+  if (!values) {
     throw new Error("Invalid expression");
   
   }
@@ -103,75 +76,77 @@ function evaluateExpression(expression) {
       '/': 2,
     };
 
-    tokens.forEach(function(token) {
-      if (token.match(/\d+(\.\d+)?/)) {
-        output.push(parseFloat(token));
-      } else if (token in precedence) {
+    values.forEach(function(element) {
+      if (element.match(/\d+(\.\d+)?/)) {
+        output.push(parseFloat(element));
+      } else if (element in precedence) { 
         while (
           operators.length > 0 &&
-          precedence[operators[operators.length - 1]] >= precedence[token]
+          precedence[operators[operators.length - 1]] >= precedence[element] 
         ) {
-          output.push(operators.pop());
+          
+          output.push(operators.pop()); 
+
         }
-        operators.push(token);
-      } else if (token === '(') {
-        operators.push(token);
-      } else if (token === ')') {
-        while (operators.length > 0 && operators[operators.length - 1] !== '(') {
-          output.push(operators.pop());
-        }
-        operators.pop(); // Discard the '('
+        operators.push(element);
       }
     });
+// 3+5-8*4/6
+// 3 5 +
+    console.log(output);
 
     while (operators.length > 0) {
       output.push(operators.pop());
+      console.log(output);
+
     }
 
-    var resultStack = [];
-    output.forEach(function(token) {
-      if (typeof token === 'number') {
-        resultStack.push(token);
-      } else {
-        var operand2 = resultStack.pop();
-        var operand1 = resultStack.pop();
+    
 
-        switch (token) {
+    var resultArray = [];
+    output.forEach(function(element) {
+      
+      if (typeof element === 'number') {
+        resultArray.push(element);
+        // console.log(resultArray);
+        
+        
+      } else {
+        var operand2 = resultArray.pop();
+        var operand1 = resultArray.pop();
+
+        switch (element) {
           case '+':
-            resultStack.push(operand1 + operand2);
+            resultArray.push(operand1 + operand2);
+            
             break;
           case '-':
-            resultStack.push(operand1 - operand2);
+            resultArray.push(operand1 - operand2);
             break;
           case '*':
-            resultStack.push(operand1 * operand2);
+            resultArray.push(operand1 * operand2);
             break;
           case '/':
             if (operand2 === 0) {
               throw new Error('Division by zero');
             }
-            resultStack.push(operand1 / operand2);
+            resultArray.push(operand1 / operand2);
             break;
         }
       }
     });
 
-    if (resultStack.length !== 1) {
+
+
+    if (resultArray.length !== 1) {
       throw new Error('Invalid expression');
     }
 
-    return resultStack[0];
+    // console.log(resultArray);
+
+    
+
+    return resultArray[0];
   }
 
 
-
-
-// function calculate() {
-//   var expression = document.getElementById("display").value;
-//     try {
-//       var result = eval(expression);
-//       document.getElementById("display").value = result;
-//     } catch (error) {
-//       document.getElementById("display").value = "Error";
-//     }
-// }
