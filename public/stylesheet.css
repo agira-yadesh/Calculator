@@ -1,0 +1,145 @@
+body {
+  font-family: "Kalnia", serif;
+  height: 100%;
+}
+header {
+  text-align: center;
+  color: #001325;
+  font-size: 30px;
+}
+
+h1 {
+  margin: 10px;
+}
+
+main {
+  width: 400px;
+  margin: 20px auto;
+  background-color: #0c4c8a;
+  padding: 10px;
+  border: 5px solid grey;
+  border-radius: 16px;
+  box-shadow: 3px 3px 5px rgba(31, 30, 30, 0.753);
+}
+
+.display {
+  margin: 10px;
+  border: 2px solid rgb(180, 180, 180);
+  font-family: "Roboto", sans-serif;
+  box-shadow: 1px 1px 10px 2px rgba(58, 57, 57, 0.74);
+  background-color: #bebebe;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+
+#input-display {
+  width: 99%;
+  height: 30px;
+  font-size: 30px;
+  text-align: right;
+  padding-top: 10px;
+  border-style: none;
+  background-color: gainsboro;
+  pointer-events: none;
+  color: black;
+ 
+}
+
+#result-display{
+  border-style: none;
+  font-size: 40px;
+  width: 99%;
+  height: 30px;
+  text-align: right;
+  padding-top: 10px;
+  background-color: gainsboro;
+  pointer-events: none;
+}
+
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.buttons button {
+  display: flex;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  background-color: #5fadbb;
+  color: white;
+  font-size: 25px;
+  border-color: rgb(172, 170, 170);
+  border-width: 1px 1px 1px 1px;
+  border-style: solid;
+  padding: 10px;
+  border-radius: 2px;
+  margin: 10px;
+  box-shadow: 1px 1px 10px 2px rgba(58, 57, 57, 0.74);
+}
+
+.buttons button.equal {
+  width: 140px;
+  background: #1f375d;
+}
+
+.buttons button.equal:hover {
+  background-color: #63728a;
+}
+
+
+
+.buttons button:hover {
+  background-color: #292a2b;
+}
+.buttons button:active {
+  position: relative;
+  top: 5px;
+}
+
+.buttons button#All-clear {
+  background-color: rgba(255, 0, 0, 0.884);
+  width: 140px;
+}
+
+.buttons button#All-clear:hover {
+  background-color: rgb(61, 0, 102);
+}
+
+.buttons button#clear {
+  background-color: #1f375d;
+}
+
+.buttons button#clear:hover {
+  background-color: rgb(61, 0, 102);
+}
+
+.buttons button.two {
+  background-color: #3066be;
+}
+
+.buttons button.operation {
+  background-color: #1f375d;
+}
+.buttons button.operation:hover {
+  background-color: #63728a;
+}
+footer {
+  text-align: center;
+
+  color: #001325;
+
+  font-size: 20px;
+}
+footer a {
+  text-decoration: none;
+  color: #001325;
+}
+
+footer a:hover {
+  text-decoration: underline;
+  color: rgb(168, 17, 17);
+}

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculator History</title>
+    <style>
+      body {
+        align-items: center;
+        justify-content: center;
+        margin: 20px;
+        font-family: "Kalnia", serif;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 40px;
+      }
+
+      .calculator-card {
+        background-color: #5fadbb;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 300px;
+        text-align: center;
+        margin: 20px;
+      }
+
+      /* .calculation {
+      margin-bottom: 10px;
+      font-size: 16px;
+    }
+
+    .result {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+    } */
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <% for(let res of values) { %>
+      <div class="calculator-card">
+        <h4 class="values">Expression: <%= res.expression %></h4>
+        <h4 class="values">Result: <%= res.result %></h4>
+        <form action="/delete" method="POST">
+          <input type="hidden" value="<%= res._id %>" name="calId">
+          <button type="submit">Delete</button>
+        </form>
+      </div>
+      <% } %>
+    </div>
+  </body>
+</html>
